@@ -53,4 +53,12 @@ public class ProductLineController implements ProductLineService {
                                                   @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
         return this.productLineServiceImpl.getPAge(page, size);
     }
+
+    @Override
+    @GetMapping("/get_filter")
+    public Response<List<ProductLineDto>> getFilter(@RequestParam(value = "id", required = false) Integer id,
+                                                    @RequestParam(value = "description", required = false) String description,
+                                                    @RequestParam(value = "image", required = false) String image) {
+        return this.productLineServiceImpl.getFilter(id, description, image);
+    }
 }

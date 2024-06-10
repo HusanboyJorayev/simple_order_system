@@ -1,5 +1,6 @@
 package org.example.simple_order_sytem.service.impl;
 
+import org.example.simple_order_sytem.filter.ProductLineFilter;
 import org.example.simple_order_sytem.repository.ProductLineRepository;
 import org.example.simple_order_sytem.service.ProductLineService;
 import org.example.simple_order_sytem.mapper.ProductLineMapper;
@@ -7,6 +8,7 @@ import org.example.simple_order_sytem.dto.ProductLineDto;
 import org.example.simple_order_sytem.entity.ProductLine;
 import org.example.simple_order_sytem.dto.Response;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -94,6 +96,23 @@ public class ProductLineServiceImpl implements ProductLineService {
                 .message("Products found")
                 .data(pages.map(this.productLineMapper::toDto))
                 .status(HttpStatus.OK)
+                .build();
+    }
+
+    @Override
+    public Response<List<ProductLineDto>> getFilter(Integer id, String description, String image) {
+        Specification<ProductLine> specification = new ProductLineFilter(id, description, image);
+        List<ProductLine> all = this.productLineRepository.findAll(specification);
+        if (all.isEmpty()) {
+            return Response.<List<ProductLineDto>>builder()
+                    .code(-1)
+                    .message("No products found")
+                    .build();
+        }
+        return Response.<List<ProductLineDto>>builder()
+                .message("Products found")
+                .status(HttpStatus.OK)
+                .data(all.stream().map(this.productLineMapper::toDto).toList())
                 .build();
     }
 }

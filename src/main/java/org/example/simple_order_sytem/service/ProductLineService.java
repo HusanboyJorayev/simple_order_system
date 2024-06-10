@@ -18,5 +18,8 @@ public interface ProductLineService {
     Response<ProductLineDto> delete(Integer id);
 
     Response<List<ProductLineDto>> getAll();
+
     Response<Page<ProductLineDto>> getPAge(Integer page, Integer size);
+
+    Response<List<ProductLineDto>> getFilter(Integer id, String description, String image);
 }
