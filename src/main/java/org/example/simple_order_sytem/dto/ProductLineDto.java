@@ -2,6 +2,7 @@ package org.example.simple_order_sytem.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.example.simple_order_sytem.entity.Image;
 
 import java.time.Instant;
 import java.util.List;
