@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,4 +22,7 @@ public class ProductLine {
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "productLineId")
+    List<Product> products;
 }

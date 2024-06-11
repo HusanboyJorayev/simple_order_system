@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +19,7 @@ public class ProductLineDto {
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
+    List<ProductDto> products;
+
 }

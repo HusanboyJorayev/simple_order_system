@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.example.simple_order_sytem.dto.ProductDto;
 import org.example.simple_order_sytem.dto.Response;
 import org.example.simple_order_sytem.entity.Product;
+import org.example.simple_order_sytem.filter.ProductFilter;
 import org.example.simple_order_sytem.mapper.ProductMapper;
 import org.example.simple_order_sytem.repository.ProductRepository;
 import org.example.simple_order_sytem.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -108,6 +110,20 @@ public class ProductServiceImpl implements ProductService {
                 .message("Products found")
                 .status(HttpStatus.OK)
                 .data(pages)
+                .build();
+    }
+
+    @Override
+    public Response<List<ProductDto>> getFilter(Integer id, Integer productLineId, String name,
+                                                Integer scale, String vendor, String PDTDescription,
+                                                Integer QtylnStock, Double byPrice, String MSRP) {
+        Specification<Product> specification = new ProductFilter(id, productLineId, name, scale, vendor, PDTDescription, QtylnStock, byPrice, MSRP);
+        List<ProductDto> products = this.productRepository.findAll(specification).
+                stream().map(this.productMapper::toDto).toList();
+        return Response.<List<ProductDto>>builder()
+                .message("Products found")
+                .status(HttpStatus.OK)
+                .data(products)
                 .build();
     }
 }

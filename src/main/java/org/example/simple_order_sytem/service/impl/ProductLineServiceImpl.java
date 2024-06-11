@@ -1,7 +1,9 @@
 package org.example.simple_order_sytem.service.impl;
 
 import org.example.simple_order_sytem.filter.ProductLineFilter;
+import org.example.simple_order_sytem.mapper.ProductMapper;
 import org.example.simple_order_sytem.repository.ProductLineRepository;
+import org.example.simple_order_sytem.repository.ProductRepository;
 import org.example.simple_order_sytem.service.ProductLineService;
 import org.example.simple_order_sytem.mapper.ProductLineMapper;
 import org.example.simple_order_sytem.dto.ProductLineDto;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class ProductLineServiceImpl implements ProductLineService {
     private final ProductLineRepository productLineRepository;
     private final ProductLineMapper productLineMapper;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Override
     public Response<ProductLineDto> create(ProductLineDto productLineDto) {
@@ -113,6 +117,17 @@ public class ProductLineServiceImpl implements ProductLineService {
                 .message("Products found")
                 .status(HttpStatus.OK)
                 .data(all.stream().map(this.productLineMapper::toDto).toList())
+                .build();
+    }
+
+    @Override
+    public Response<ProductLineDto> getWithProduct(Integer id) {
+        ProductLine line = this.productLineRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product line not found"));
+        return Response.<ProductLineDto>builder()
+                .message("Product line found")
+                .status(HttpStatus.OK)
+                .data(productLineMapper.toDtoWithProduct(line, productRepository, productMapper))
                 .build();
     }
 }

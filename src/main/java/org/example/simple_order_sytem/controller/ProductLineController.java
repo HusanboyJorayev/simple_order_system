@@ -61,4 +61,10 @@ public class ProductLineController implements ProductLineService {
                                                     @RequestParam(value = "image", required = false) String image) {
         return this.productLineServiceImpl.getFilter(id, description, image);
     }
+
+    @Override
+    @GetMapping("/get with product")
+    public Response<ProductLineDto> getWithProduct(@RequestParam("id") Integer id) {
+        return this.productLineServiceImpl.getWithProduct(id);
+    }
 }

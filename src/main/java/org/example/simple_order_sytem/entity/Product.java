@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import java.time.Instant;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private Integer productLineId;
     private String name;
     private Integer scale;
@@ -28,5 +29,6 @@ public class Product {
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
 }
 

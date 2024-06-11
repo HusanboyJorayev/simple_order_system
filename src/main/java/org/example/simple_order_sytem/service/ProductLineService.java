@@ -13,6 +13,8 @@ public interface ProductLineService {
 
     Response<ProductLineDto> get(Integer id);
 
+    Response<ProductLineDto> getWithProduct(Integer id);
+
     Response<ProductLineDto> update(ProductLineDto productLineDto, Integer id);
 
     Response<ProductLineDto> delete(Integer id);

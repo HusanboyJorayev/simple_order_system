@@ -52,4 +52,18 @@ public class ProductController implements ProductService {
                                               @RequestParam(value = "size", required = false, defaultValue = "20") Integer size) {
         return this.productServiceImpl.getPAge(page, size);
     }
+
+    @Override
+    @GetMapping("/getFilter")
+    public Response<List<ProductDto>> getFilter(@RequestParam(value = "id", required = false) Integer id,
+                                                @RequestParam(value = "product line id", required = false) Integer productLineId,
+                                                @RequestParam(value = "name", required = false) String name,
+                                                @RequestParam(value = "scale", required = false) Integer scale,
+                                                @RequestParam(value = "vendor", required = false) String vendor,
+                                                @RequestParam(value = "PDT description", required = false) String PDTDescription,
+                                                @RequestParam(value = "QtylnStock", required = false) Integer QtylnStock,
+                                                @RequestParam(value = "by price", required = false) Double byPrice,
+                                                @RequestParam(value = "MSRP", required = false) String MSRP) {
+        return this.productServiceImpl.getFilter(id, productLineId, name, scale, vendor, PDTDescription, QtylnStock, byPrice, MSRP);
+    }
 }

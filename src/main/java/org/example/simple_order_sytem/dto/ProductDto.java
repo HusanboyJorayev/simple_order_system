@@ -1,9 +1,12 @@
 package org.example.simple_order_sytem.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.example.simple_order_sytem.entity.ProductLine;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,8 +14,9 @@ import java.time.Instant;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductDto {
-    private int id;
+    private Integer id;
     private Integer productLineId;
     private String name;
     private Integer scale;
@@ -24,4 +28,5 @@ public class ProductDto {
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
 }

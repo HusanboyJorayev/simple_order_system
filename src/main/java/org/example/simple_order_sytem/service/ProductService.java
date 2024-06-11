@@ -20,4 +20,8 @@ public interface ProductService {
     Response<List<ProductDto>> getAll();
 
     Response<Page<ProductDto>> getPAge(Integer page, Integer size);
+
+    Response<List<ProductDto>> getFilter(Integer id, Integer productLineId,
+                                         String name, Integer scale, String vendor, String PDTDescription,
+                                         Integer QtylnStock, Double byPrice, String MSRP);
 }
