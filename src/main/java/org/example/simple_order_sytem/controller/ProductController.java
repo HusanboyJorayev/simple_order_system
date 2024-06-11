@@ -1,0 +1,55 @@
+package org.example.simple_order_sytem.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.example.simple_order_sytem.dto.ProductDto;
+import org.example.simple_order_sytem.dto.Response;
+import org.example.simple_order_sytem.service.ProductService;
+import org.example.simple_order_sytem.service.impl.ProductServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("api/product/")
+public class ProductController implements ProductService {
+    public final ProductServiceImpl productServiceImpl;
+
+    @Override
+    @PostMapping("/create")
+    public Response<ProductDto> create(@RequestBody ProductDto productLineDto) {
+        return this.productServiceImpl.create(productLineDto);
+    }
+
+    @Override
+    @GetMapping("/get")
+    public Response<ProductDto> get(@RequestParam("id") Integer id) {
+        return this.productServiceImpl.get(id);
+    }
+
+    @Override
+    @PutMapping("/update")
+    public Response<ProductDto> update(@RequestBody ProductDto productLineDto, @RequestParam("id") Integer id) {
+        return this.productServiceImpl.update(productLineDto, id);
+    }
+
+    @Override
+    @DeleteMapping("/delete")
+    public Response<ProductDto> delete(@RequestParam("id") Integer id) {
+        return this.productServiceImpl.delete(id);
+    }
+
+    @Override
+    @GetMapping("/getAll")
+    public Response<List<ProductDto>> getAll() {
+        return this.productServiceImpl.getAll();
+    }
+
+    @Override
+    @GetMapping("/getPage")
+    public Response<Page<ProductDto>> getPAge(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                                              @RequestParam(value = "size", required = false, defaultValue = "20") Integer size) {
+        return this.productServiceImpl.getPAge(page, size);
+    }
+}
