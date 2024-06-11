@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public interface ProductService {
@@ -24,4 +25,6 @@ public interface ProductService {
     Response<List<ProductDto>> getFilter(Integer id, Integer productLineId,
                                          String name, Integer scale, String vendor, String PDTDescription,
                                          Integer QtylnStock, Double byPrice, String MSRP);
+
+    Response<Map<Integer, List<ProductDto>>> groupByProductLineId();
 }

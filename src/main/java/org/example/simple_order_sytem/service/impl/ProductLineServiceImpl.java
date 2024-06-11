@@ -7,6 +7,7 @@ import org.example.simple_order_sytem.repository.ProductRepository;
 import org.example.simple_order_sytem.service.ProductLineService;
 import org.example.simple_order_sytem.mapper.ProductLineMapper;
 import org.example.simple_order_sytem.dto.ProductLineDto;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.domain.Specification;
 import org.example.simple_order_sytem.entity.ProductLine;
 import org.example.simple_order_sytem.dto.Response;
@@ -25,7 +26,9 @@ import java.util.Optional;
 public class ProductLineServiceImpl implements ProductLineService {
     private final ProductLineRepository productLineRepository;
     private final ProductLineMapper productLineMapper;
+    @Lazy
     private final ProductRepository productRepository;
+    @Lazy
     private final ProductMapper productMapper;
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,5 +66,11 @@ public class ProductController implements ProductService {
                                                 @RequestParam(value = "by price", required = false) Double byPrice,
                                                 @RequestParam(value = "MSRP", required = false) String MSRP) {
         return this.productServiceImpl.getFilter(id, productLineId, name, scale, vendor, PDTDescription, QtylnStock, byPrice, MSRP);
+    }
+
+    @Override
+    @GetMapping("/group_by_productLineId")
+    public Response<Map<Integer, List<ProductDto>>> groupByProductLineId() {
+        return this.productServiceImpl.groupByProductLineId();
     }
 }

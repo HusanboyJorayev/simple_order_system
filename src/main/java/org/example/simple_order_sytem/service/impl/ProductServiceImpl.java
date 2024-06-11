@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -124,6 +126,18 @@ public class ProductServiceImpl implements ProductService {
                 .message("Products found")
                 .status(HttpStatus.OK)
                 .data(products)
+                .build();
+    }
+
+    @Override
+    public Response<Map<Integer, List<ProductDto>>> groupByProductLineId() {
+        return Response.<Map<Integer, List<ProductDto>>>builder()
+                .message("Ok")
+                .status(HttpStatus.OK)
+                .data(this.productRepository.findAll()
+                        .stream()
+                        .map(this.productMapper::toDto)
+                        .collect(Collectors.groupingBy(ProductDto::getProductLineId)))
                 .build();
     }
 }
