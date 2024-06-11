@@ -2,8 +2,8 @@ package org.example.simple_order_sytem.mapper;
 
 
 import org.example.simple_order_sytem.dto.ProductDto;
-import org.example.simple_order_sytem.dto.ProductLineDto;
 import org.example.simple_order_sytem.entity.ProductLine;
+import org.example.simple_order_sytem.dto.ProductLineDto;
 import org.example.simple_order_sytem.repository.ProductRepository;
 import org.mapstruct.*;
 
