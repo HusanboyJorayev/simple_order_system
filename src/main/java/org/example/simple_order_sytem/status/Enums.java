@@ -1,4 +1,4 @@
-package org.example.simple_order_sytem;
+package org.example.simple_order_sytem.status;
 
 import lombok.*;
 
