@@ -1,7 +1,9 @@
 package org.example.simple_order_sytem;
 
+import org.example.simple_order_sytem.entity.OrderProduct;
 import org.example.simple_order_sytem.entity.Product;
 import org.example.simple_order_sytem.entity.ProductLine;
+import org.example.simple_order_sytem.repository.OrderProductRepository;
 import org.example.simple_order_sytem.repository.ProductLineRepository;
 import org.example.simple_order_sytem.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -44,10 +46,26 @@ public class SimpleOrderSystemApplication {
                         .name("name" + i)
                         .PDTDescription("description" + i)
                         .vendor("vendor" + i)
-                        .QtylnStock(i+1)
+                        .QtylnStock(i + 1)
                         .createdAt(Instant.now())
                         .build();
                 repository.save(product);
+            }
+        };
+    }
+
+    @Bean
+    public CommandLineRunner runOrderProduct(OrderProductRepository repository) {
+        return args -> {
+            for (int i = 0; i < 100; i++) {
+                OrderProduct orderProduct = OrderProduct.builder()
+                        .productId(i / 2 + 1)
+                        .orderId(i / 3 + 1)
+                        .price(i * i + 2.98)
+                        .quantity(i + 4)
+                        .createdAt(Instant.now())
+                        .build();
+                repository.save(orderProduct);
             }
         };
     }

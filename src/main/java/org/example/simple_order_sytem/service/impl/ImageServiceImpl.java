@@ -76,7 +76,6 @@ public class ImageServiceImpl {
             System.arraycopy(image, 0, imagDataLength, desTops, image.length);
             desTops += image.length;
         }
-
         return imagDataLength;
     }
 }
