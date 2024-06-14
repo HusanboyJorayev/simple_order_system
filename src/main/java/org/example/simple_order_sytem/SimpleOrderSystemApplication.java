@@ -118,4 +118,23 @@ public class SimpleOrderSystemApplication {
             }
         };
     }
+
+    @Bean
+    public CommandLineRunner runEmployee(EmployeeRepository repository) {
+        return args -> {
+            for (int i = 0; i < 100; i++) {
+                Employee employee = Employee.builder()
+                        .officeId(i+1)
+                        .extension("extension_" + i)
+                        .firstname("firstname_" + i)
+                        .lastname("lastname_" + i)
+                        .email("email-" + i)
+                        .jobTitle("job_title_" + i)
+                        .reportTo(i / 3 / 5 + 1)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                repository.save(employee);
+            }
+        };
+    }
 }

@@ -1,25 +1,25 @@
 package org.example.simple_order_sytem.service.impl;
 
-import org.example.simple_order_sytem.filter.CustomerFilter;
+import org.springframework.data.jpa.domain.Specification;
+
 import org.example.simple_order_sytem.repository.CustomerRepository;
 import org.example.simple_order_sytem.service.CustomerService;
 import org.example.simple_order_sytem.mapper.CustomerMapper;
+import org.example.simple_order_sytem.filter.CustomerFilter;
 import org.example.simple_order_sytem.dto.CustomerDto;
 import org.example.simple_order_sytem.entity.Customer;
 import org.example.simple_order_sytem.dto.Response;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 
+import java.util.stream.Collectors;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 @Service
 @RequiredArgsConstructor
