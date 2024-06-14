@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Enums {
+public class Outer {
     private Integer id;
     private String name;
     private String description;
@@ -16,21 +16,34 @@ public class Enums {
 
     @Getter
     @Setter
-    @Builder
+    //@Builder
     @NoArgsConstructor
     @AllArgsConstructor
     @ToString
-    public static class Inner {
+    public class Inner {
         private Integer id;
         private String inner_name;
     }
 
     public static void main(String[] args) {
-        Inner build = Inner.builder()
+        /*Inner build = Inner.builder()
                 .id(1)
                 .inner_name("INNER_NAME")
                 .build();
 
-        System.out.println(build.getInner_name());
+        System.out.println(build.getInner_name());*/
+
+
+        Outer.Inner inner = new Outer().new Inner();
+        inner.setId(12);
+        inner.setInner_name("inner_name");
+
+        System.out.println(inner.id);
+        System.out.println(inner.inner_name);
+
+        System.out.println("------------------");
+
+        System.out.println(inner.getId());
+        System.out.println(inner.getInner_name());
     }
 }

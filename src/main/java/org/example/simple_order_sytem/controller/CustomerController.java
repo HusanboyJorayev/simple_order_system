@@ -6,9 +6,12 @@ import org.example.simple_order_sytem.dto.Response;
 import org.example.simple_order_sytem.service.CustomerService;
 import org.example.simple_order_sytem.service.impl.CustomerServiceImpl;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,5 +55,34 @@ public class CustomerController implements CustomerService {
     public Response<Page<CustomerDto>> getPage(@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                                @RequestParam(value = "size", required = false, defaultValue = "20") Integer size) {
         return this.customerServiceImpl.getPage(page, size);
+    }
+
+    @Override
+    @GetMapping("/customer_filter")
+    public Response<List<CustomerDto>> getFilter(@RequestParam(value = "id", required = false) Integer id,
+                                                 @RequestParam(value = "employee_id", required = false) Integer employeeId,
+                                                 @RequestParam(value = "firstname", required = false) String firstName,
+                                                 @RequestParam(value = "lastname", required = false) String lastName,
+                                                 @RequestParam(value = "email", required = false) String email,
+                                                 @RequestParam(value = "phone", required = false) String phone,
+                                                 @RequestParam(value = "address1", required = false) String address1,
+                                                 @RequestParam(value = "address2", required = false) String address2,
+                                                 @RequestParam(value = "city", required = false) String city,
+                                                 @RequestParam(value = "state", required = false) String state,
+                                                 @RequestParam(value = "zip_code", required = false) String zipCode,
+                                                 @RequestParam(value = "country", required = false) String country,
+                                                 @RequestParam(value = "credit_limit", required = false) Double creditLimit) {
+        return this.customerServiceImpl.getFilter(id, employeeId, firstName, lastName, email, phone, address1, address2, city, state, zipCode, country, creditLimit);
+    }
+
+    @Override
+    @GetMapping("/group_by_CustomerByEmployeeId")
+    public Response<Map<Integer, List<CustomerDto>>> group_byCustomerByEmployeeId() {
+        return this.customerServiceImpl.group_byCustomerByEmployeeId();
+    }
+
+    @GetMapping("/get_employee_all_credits")
+    public Response<Double> getAllEmployeeCredit() {
+        return this.customerServiceImpl.getAllEmployeeCredit();
     }
 }

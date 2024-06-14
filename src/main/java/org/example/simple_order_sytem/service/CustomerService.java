@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public interface CustomerService {
@@ -17,7 +18,23 @@ public interface CustomerService {
 
     Response<CustomerDto> delete(Integer id);
 
-    Response<List<CustomerDto>>getAll();
+    Response<List<CustomerDto>> getAll();
 
-    Response<Page<CustomerDto>>getPage(Integer page, Integer size);
+    Response<List<CustomerDto>> getFilter(Integer id,
+                                          Integer employeeId,
+                                          String firstName,
+                                          String lastName,
+                                          String email,
+                                          String phone,
+                                          String address1,
+                                          String address2,
+                                          String city,
+                                          String state,
+                                          String zipCode,
+                                          String country,
+                                          Double creditLimit);
+
+    Response<Page<CustomerDto>> getPage(Integer page, Integer size);
+
+    Response<Map<Integer, List<CustomerDto>>> group_byCustomerByEmployeeId();
 }

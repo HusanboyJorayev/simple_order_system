@@ -1,13 +1,7 @@
 package org.example.simple_order_sytem;
 
-import org.example.simple_order_sytem.entity.Order;
-import org.example.simple_order_sytem.entity.OrderProduct;
-import org.example.simple_order_sytem.entity.Product;
-import org.example.simple_order_sytem.entity.ProductLine;
-import org.example.simple_order_sytem.repository.OrderProductRepository;
-import org.example.simple_order_sytem.repository.OrderRepository;
-import org.example.simple_order_sytem.repository.ProductLineRepository;
-import org.example.simple_order_sytem.repository.ProductRepository;
+import org.example.simple_order_sytem.entity.*;
+import org.example.simple_order_sytem.repository.*;
 import org.example.simple_order_sytem.status.OrderStatus;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @SpringBootApplication
@@ -96,6 +91,30 @@ public class SimpleOrderSystemApplication {
                 } else
                     order.setStatus(OrderStatus.UNBLOCKED);
                 repository.save(order);
+            }
+        };
+    }
+
+    @Bean
+    public CommandLineRunner runCustomer(CustomerRepository repository) {
+        return args -> {
+            for (int i = 0; i < 100; i++) {
+                Customer customer = Customer.builder()
+                        .employeeId(i / 3 + 1)
+                        .firstName("firstName_" + i)
+                        .country("Country_" + i)
+                        .lastName("lastName_" + i)
+                        .address1("address1_" + i)
+                        .address2("address2_" + i)
+                        .zipCode("zipCode_" + i)
+                        .city("city_" + i)
+                        .creditLimit(23.5 + (double) i / 3 * 4)
+                        .email("email_@" + i)
+                        .phone("phone_" + i)
+                        .state("state_" + i)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                repository.save(customer);
             }
         };
     }
