@@ -124,7 +124,7 @@ public class SimpleOrderSystemApplication {
         return args -> {
             for (int i = 0; i < 100; i++) {
                 Employee employee = Employee.builder()
-                        .officeId(i+1)
+                        .officeId(i + 1)
                         .extension("extension_" + i)
                         .firstname("firstname_" + i)
                         .lastname("lastname_" + i)
@@ -134,6 +134,26 @@ public class SimpleOrderSystemApplication {
                         .createdAt(LocalDateTime.now())
                         .build();
                 repository.save(employee);
+            }
+        };
+    }
+
+    @Bean
+    public CommandLineRunner runOffice(OfficeRepository repository) {
+        return args -> {
+            for (int i = 0; i < 100; i++) {
+                Office office = Office.builder()
+                        .address1("address1_" + i)
+                        .address2("address2_" + i)
+                        .city("city_" + i)
+                        .country("Country_" + i)
+                        .state("state_" + i)
+                        .phone("phone_" + i)
+                        .postCode(i + 34)
+                        .territory("territory_" + i)
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                repository.save(office);
             }
         };
     }
