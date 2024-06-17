@@ -157,4 +157,19 @@ public class SimpleOrderSystemApplication {
             }
         };
     }
+
+    @Bean
+    public CommandLineRunner runPayment(PaymentRepository repository) {
+        return args -> {
+            for (int i = 0; i < 100; i++) {
+                Payment payment = Payment.builder()
+                        .amount(i + 3 * 4.6)
+                        .customerId(i / 3 + 1)
+                        .paymentDate(LocalDateTime.now())
+                        .createdAt(LocalDateTime.now())
+                        .build();
+                repository.save(payment);
+            }
+        };
+    }
 }
