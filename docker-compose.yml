@@ -1,0 +1,36 @@
+#version: '3.8'
+#
+#services:
+#  db:
+#    image: postgres:15
+#    container_name: postgres
+#    environment:
+#      POSTGRES_DB: postgres
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: root
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#
+#  app:
+#    image: myapp:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - db
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: root
+#    ports:
+#      - "9090:9090"
+#    networks:
+#      - mynetwork
+#
+#volumes:
+#  postgres_data:
+#
+#networks:
+#  mynetwork:
