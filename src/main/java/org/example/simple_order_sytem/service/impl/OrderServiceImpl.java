@@ -2,13 +2,17 @@ package org.example.simple_order_sytem.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.simple_order_sytem.dto.OrderDto;
+import org.example.simple_order_sytem.dto.OrderProductDto;
 import org.example.simple_order_sytem.dto.Response;
 import org.example.simple_order_sytem.entity.Order;
 import org.example.simple_order_sytem.filter.OrderFilter;
 import org.example.simple_order_sytem.mapper.OrderMapper;
+import org.example.simple_order_sytem.mapper.OrderProductMapper;
+import org.example.simple_order_sytem.repository.OrderProductRepository;
 import org.example.simple_order_sytem.repository.OrderRepository;
 import org.example.simple_order_sytem.service.OrderService;
 import org.example.simple_order_sytem.status.OrderStatus;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,6 +31,10 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    @Lazy
+    private final OrderProductRepository orderProductRepository;
+    @Lazy
+    private final OrderProductMapper orderProductMapper;
 
     @Override
     public Response<OrderDto> create(OrderDto dto) {
@@ -123,16 +131,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Response<List<OrderDto>> getFilter(Integer id, Integer customerId,
+    public Response<List<OrderDto>> getFilter(Integer id, Integer customerId, Integer orderProductId,
                                               LocalDate orderDate, LocalDate requiredDate,
                                               LocalDate shippedDate, OrderStatus status, String comments) {
-        Specification<Order> specification = new OrderFilter(id, customerId, orderDate, requiredDate, shippedDate, status, comments);
+        Specification<Order> specification = new OrderFilter(id, customerId, orderProductId, orderDate, requiredDate, shippedDate, status, comments);
         List<OrderDto> dtoList = this.orderRepository.findAll(specification)
-                .stream().map(this.orderMapper::toDto).toList();
+                .stream().map(this.orderMapper::toDtoWithOrderProduct).toList();
+        if (!dtoList.isEmpty()) {
+            return Response.<List<OrderDto>>builder()
+                    .message("Orders found")
+                    .status(HttpStatus.OK)
+                    .data(dtoList)
+                    .build();
+        }
         return Response.<List<OrderDto>>builder()
-                .message("Orders found")
+                .message("Orders are empty")
                 .status(HttpStatus.OK)
-                .data(dtoList)
                 .build();
     }
 
@@ -145,6 +159,27 @@ public class OrderServiceImpl implements OrderService {
                 .message("Orders found")
                 .status(HttpStatus.OK)
                 .data(collect)
+                .build();
+    }
+
+    @Override
+    public Response<OrderDto> getWithOrderProduct(Integer id) {
+        Optional<Order> optional = this.orderRepository.findById(id);
+        if (optional.isPresent()) {
+            Order order = optional.get();
+            OrderDto dto = this.orderMapper.toDtoWithOrderProduct(order);
+            List<OrderProductDto> dtoList = this.orderProductRepository.findByOrderId(id)
+                    .stream().map(this.orderProductMapper::toDto).toList();
+            dto.setOrderProducts(dtoList);
+            return Response.<OrderDto>builder()
+                    .message("Order found")
+                    .status(HttpStatus.OK)
+                    .data(dto)
+                    .build();
+        }
+        return Response.<OrderDto>builder()
+                .message("Order not found")
+                .status(HttpStatus.NOT_FOUND)
                 .build();
     }
 }

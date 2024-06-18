@@ -26,6 +26,10 @@ public class Product {
     private Integer QtylnStock;
     private Double byPrice;
     private String MSRP;
+
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "productId")
+    List<OrderProduct>orderProducts;
+
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;

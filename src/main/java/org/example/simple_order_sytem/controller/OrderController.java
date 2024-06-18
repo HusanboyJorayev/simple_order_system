@@ -62,6 +62,7 @@ public class OrderController implements OrderService {
     @GetMapping("/get_filter")
     public Response<List<OrderDto>> getFilter(@RequestParam(value = "id", required = false) Integer id,
                                               @RequestParam(value = "customer_id", required = false) Integer customerId,
+                                              @RequestParam(value = "order_id", required = false) Integer orderProductId,
                                               @RequestParam(value = "orderDAte", required = false)
                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate,
                                               @RequestParam(value = "requiredDate", required = false)
@@ -70,12 +71,18 @@ public class OrderController implements OrderService {
                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate shippedDate,
                                               @RequestParam(value = "status", required = false) OrderStatus status,
                                               @RequestParam(value = "comments", required = false) String comments) {
-        return this.orderServiceImpl.getFilter(id, customerId, orderDate, requiredDate, shippedDate, status, comments);
+        return this.orderServiceImpl.getFilter(id, customerId, orderProductId, orderDate, requiredDate, shippedDate, status, comments);
     }
 
     @Override
     @GetMapping("/group_byOrderByStatus")
     public Response<Map<OrderStatus, List<OrderDto>>> group_byOrderByStatus() {
         return this.orderServiceImpl.group_byOrderByStatus();
+    }
+
+    @Override
+    @GetMapping("/getWithOrderProduct")
+    public Response<OrderDto> getWithOrderProduct(@RequestParam("id") Integer id) {
+        return this.orderServiceImpl.getWithOrderProduct(id);
     }
 }

@@ -16,6 +16,8 @@ public interface OrderService {
 
     Response<OrderDto> get(Integer id);
 
+    Response<OrderDto> getWithOrderProduct(Integer id);
+
     Response<OrderDto> update(OrderDto dto, Integer id);
 
     Response<OrderDto> delete(Integer id);
@@ -24,7 +26,7 @@ public interface OrderService {
 
     Response<Page<OrderDto>> getPage(Integer page, Integer size);
 
-    Response<List<OrderDto>> getFilter(Integer id, Integer customerId,
+    Response<List<OrderDto>> getFilter(Integer id, Integer customerId,Integer orderProductId,
                                        LocalDate orderDate, LocalDate requiredDate,
                                        LocalDate shippedDate, OrderStatus status, String comments);
 

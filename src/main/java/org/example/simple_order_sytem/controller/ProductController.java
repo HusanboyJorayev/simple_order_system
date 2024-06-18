@@ -73,4 +73,10 @@ public class ProductController implements ProductService {
     public Response<Map<Integer, List<ProductDto>>> groupByProductLineId() {
         return this.productServiceImpl.groupByProductLineId();
     }
+
+    @Override
+    @GetMapping("/getWithOrderProduct")
+    public Response<ProductDto> getWithOrderProduct(@RequestParam("id") Integer id) {
+        return this.productServiceImpl.getWithOrderProduct(id);
+    }
 }

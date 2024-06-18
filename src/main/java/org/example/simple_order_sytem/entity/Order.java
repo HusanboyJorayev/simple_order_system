@@ -7,6 +7,7 @@ import org.example.simple_order_sytem.status.OrderStatus;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,4 +33,7 @@ public class Order {
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
+
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "orderId")
+    private List<OrderProduct> orderProducts;
 }

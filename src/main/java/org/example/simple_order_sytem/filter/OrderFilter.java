@@ -20,6 +20,7 @@ import java.time.LocalDate;
 public class OrderFilter implements Specification<Order> {
     private Integer id;
     private Integer customerId;
+    private Integer orderProductId;
     private LocalDate orderDate;
     private LocalDate requiredDate;
     private LocalDate shippedDate;
@@ -38,6 +39,9 @@ public class OrderFilter implements Specification<Order> {
         }
         if (customerId != null) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("customerId"), customerId));
+        }
+        if (orderProductId != null) {
+            predicate=criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("orderProducts").get("orderId"), orderProductId));
         }
         if (orderDate != null) {
             predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("orderDate"), orderDate));

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import org.example.simple_order_sytem.entity.OrderProduct;
 import org.example.simple_order_sytem.status.OrderStatus;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Getter
@@ -31,4 +33,7 @@ public class OrderDto {
     private Instant createdAt;
     private Instant updatedAt;
     private Instant deletedAt;
+
+    private List<OrderProductDto> orderProducts;
+
 }

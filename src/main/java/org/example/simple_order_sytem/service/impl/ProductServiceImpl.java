@@ -3,11 +3,15 @@ package org.example.simple_order_sytem.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.example.simple_order_sytem.dto.ProductDto;
 import org.example.simple_order_sytem.dto.Response;
+import org.example.simple_order_sytem.entity.OrderProduct;
 import org.example.simple_order_sytem.entity.Product;
 import org.example.simple_order_sytem.filter.ProductFilter;
+import org.example.simple_order_sytem.mapper.OrderProductMapper;
 import org.example.simple_order_sytem.mapper.ProductMapper;
+import org.example.simple_order_sytem.repository.OrderProductRepository;
 import org.example.simple_order_sytem.repository.ProductRepository;
 import org.example.simple_order_sytem.service.ProductService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +29,10 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    @Lazy
+    private final OrderProductRepository orderProductRepository;
+    @Lazy
+    private final OrderProductMapper orderProductMapper;
 
     @Override
     public Response<ProductDto> create(ProductDto productLineDto) {
@@ -138,6 +147,26 @@ public class ProductServiceImpl implements ProductService {
                         .stream()
                         .map(this.productMapper::toDto)
                         .collect(Collectors.groupingBy(ProductDto::getProductLineId)))
+                .build();
+    }
+
+    @Override
+    public Response<ProductDto> getWithOrderProduct(Integer id) {
+        Optional<Product> optional = this.productRepository.findById(id);
+        List<OrderProduct> orderProducts = this.orderProductRepository.findByProductId(id);
+        if (optional.isPresent()) {
+            Product product = optional.get();
+            ProductDto dto = this.productMapper.toDto(product);
+            dto.setOrderProducts(orderProducts.stream().map(this.orderProductMapper::toDto).toList());
+            return Response.<ProductDto>builder()
+                    .message("OK")
+                    .status(HttpStatus.OK)
+                    .data(dto)
+                    .build();
+        }
+        return Response.<ProductDto>builder()
+                .message("Not found")
+                .status(HttpStatus.NOT_FOUND)
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package org.example.simple_order_sytem.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.example.simple_order_sytem.entity.OrderProduct;
 import org.example.simple_order_sytem.entity.ProductLine;
 
 import java.time.Instant;
@@ -28,5 +29,7 @@ public class ProductDto {
     private Instant createdAt;
     private Instant deletedAt;
     private Instant updatedAt;
+
+    List<OrderProductDto> orderProducts;
 
 }

@@ -14,6 +14,8 @@ public interface ProductService {
 
     Response<ProductDto> get(Integer id);
 
+    Response<ProductDto> getWithOrderProduct(Integer id);
+
     Response<ProductDto> update(ProductDto productLineDto, Integer id);
 
     Response<ProductDto> delete(Integer id);
