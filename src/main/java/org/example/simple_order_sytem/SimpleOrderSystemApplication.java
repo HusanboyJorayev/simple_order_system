@@ -1,19 +1,31 @@
 package org.example.simple_order_sytem;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.simple_order_sytem.entity.*;
 import org.example.simple_order_sytem.repository.*;
 import org.example.simple_order_sytem.status.OrderStatus;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @SpringBootApplication
+@EnableCaching
+@EnableScheduling
+@Slf4j
 public class SimpleOrderSystemApplication {
 
     public static void main(String[] args) {
@@ -172,4 +184,19 @@ public class SimpleOrderSystemApplication {
             }
         };
     }
+
+    // todo made cache name
+   /* @Bean
+    public CacheManager cacheManager() {
+        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
+        cacheManager.setCacheNames(List.of("customers", "employees"));
+        return cacheManager;
+    }*/
+
+    // todo simple cache
+   /* @CacheEvict(value = "customers", allEntries = true)
+    @Scheduled(initialDelay = 2, fixedRate = 5, timeUnit = TimeUnit.SECONDS)
+    public void deleteAllCacheCustomers() {
+        log.info("All entries of customers of caching");
+    }*/
 }
