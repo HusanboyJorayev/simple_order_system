@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -180,6 +181,22 @@ public class OrderServiceImpl implements OrderService {
         return Response.<OrderDto>builder()
                 .message("Order not found")
                 .status(HttpStatus.NOT_FOUND)
+                .build();
+    }
+
+    @Override
+    public Response<List<OrderDto.ShortOrderDto>> shortDto() {
+        List<Object[]> objects = this.orderRepository.shortOrderDto();
+        List<OrderDto.ShortOrderDto> dtos = new ArrayList<>();
+        for (Object[] object : objects) {
+            OrderDto.ShortOrderDto e = new OrderDto.ShortOrderDto((Integer) object[0], (Integer) object[1],
+                    (LocalDate) object[2], (LocalDate) object[3], (LocalDate) object[4]);
+            dtos.add(e);
+        }
+        return Response.<List<OrderDto.ShortOrderDto>>builder()
+                .message("Ok")
+                .data(dtos)
+                .status(HttpStatus.OK)
                 .build();
     }
 }
