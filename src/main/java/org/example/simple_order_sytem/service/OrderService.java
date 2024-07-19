@@ -31,4 +31,6 @@ public interface OrderService {
                                        LocalDate shippedDate, OrderStatus status, String comments);
 
     Response<Map<OrderStatus, List<OrderDto>>> group_byOrderByStatus();
+
+    Response<List<OrderDto.ShortOrderDto>> shortDto();
 }

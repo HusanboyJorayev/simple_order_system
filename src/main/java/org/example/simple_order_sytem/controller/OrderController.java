@@ -86,4 +86,10 @@ public class OrderController implements OrderService {
     public Response<OrderDto> getWithOrderProduct(@RequestParam("id") Integer id) {
         return this.orderServiceImpl.getWithOrderProduct(id);
     }
+
+    @Override
+    @GetMapping("/shortDto")
+    public Response<List<OrderDto.ShortOrderDto>> shortDto() {
+        return this.orderServiceImpl.shortDto();
+    }
 }

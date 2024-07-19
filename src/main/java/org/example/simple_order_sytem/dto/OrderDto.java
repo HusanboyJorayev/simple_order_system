@@ -38,4 +38,17 @@ public class OrderDto {
 
     private List<OrderProductDto> orderProducts;
 
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ShortOrderDto {
+        private Integer id;
+        @NotNull(message = "customer_id cannot be null")
+        private Integer customerId;
+        private LocalDate orderDate;
+        private LocalDate requiredDate;
+        private LocalDate shippedDate;
+    }
 }
