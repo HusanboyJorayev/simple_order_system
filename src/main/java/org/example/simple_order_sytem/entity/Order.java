@@ -1,6 +1,7 @@
 package org.example.simple_order_sytem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.simple_order_sytem.status.OrderStatus;
 
