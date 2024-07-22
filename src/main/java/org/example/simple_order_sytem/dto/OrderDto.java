@@ -3,9 +3,8 @@ package org.example.simple_order_sytem.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.example.simple_order_sytem.entity.OrderProduct;
+
 import org.example.simple_order_sytem.status.OrderStatus;
 
 import java.time.Instant;
@@ -22,7 +21,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDto {
     private Integer id;
-    @NotNull(message = "customer_id cannot be null")
+    //@NotNull(message = "customer_id cannot be null")
     private Integer customerId;
     private LocalDate orderDate;
     private LocalDate requiredDate;
@@ -45,7 +44,7 @@ public class OrderDto {
     @AllArgsConstructor
     public static class ShortOrderDto {
         private Integer id;
-        @NotNull(message = "customer_id cannot be null")
+       // @NotNull(message = "customer_id cannot be null")
         private Integer customerId;
         private LocalDate orderDate;
         private LocalDate requiredDate;

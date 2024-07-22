@@ -1,6 +1,10 @@
 package org.example.simple_order_sytem.controller;
 
-import jakarta.validation.Valid;
+
+
+
+
+
 import lombok.RequiredArgsConstructor;
 import org.example.simple_order_sytem.dto.OrderDto;
 import org.example.simple_order_sytem.dto.Response;
@@ -23,7 +27,7 @@ public class OrderController implements OrderService {
 
     @Override
     @PostMapping("/create")
-    public Response<OrderDto> create(@Valid @RequestBody OrderDto dto) {
+    public Response<OrderDto> create(/*@Valid*/ @RequestBody OrderDto dto) {
         return this.orderServiceImpl.create(dto);
     }
 
