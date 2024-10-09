@@ -65,4 +65,17 @@ public class EmployeeController implements EmployeeService {
                                                  @RequestParam(value = "jobTitle", required = false) String jobTitle) {
         return this.employeeServiceImpl.getFilter(id, officeId, reportTo, lastname, firstname, extension, email, jobTitle);
     }
+
+    @Override
+    @GetMapping("/list/filter")
+    public Response<List<EmployeeDto>> getFilterByQuery(@RequestParam(value = "id", required = false) Integer id,
+                                                        @RequestParam(value = "office_id", required = false) Integer officeId,
+                                                        @RequestParam(value = "report_to", required = false) Integer reportTo,
+                                                        @RequestParam(value = "lastname", required = false) String lastname,
+                                                        @RequestParam(value = "firstname", required = false) String firstname,
+                                                        @RequestParam(value = "extension", required = false) String extension,
+                                                        @RequestParam(value = "email", required = false) String email,
+                                                        @RequestParam(value = "jobTitle", required = false) String jobTitle) {
+        return this.employeeServiceImpl.getFilterByQuery(id, officeId, reportTo, lastname, firstname, extension, email, jobTitle);
+    }
 }

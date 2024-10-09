@@ -28,4 +28,12 @@ public interface EmployeeService {
             String firstname,
             String extension,
             String email, String jobTitle);
+
+    Response<List<EmployeeDto>> getFilterByQuery(
+            Integer id, Integer officeId,
+            Integer reportTo,
+            String lastname,
+            String firstname,
+            String extension,
+            String email, String jobTitle);
 }

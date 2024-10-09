@@ -12,9 +12,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+
+import javax.sql.DataSource;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,6 +34,12 @@ public class SimpleOrderSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SimpleOrderSystemApplication.class, args);
+    }
+
+
+    @Bean
+    public NamedParameterJdbcTemplate jdbcTemplate(DataSource source) {
+        return new NamedParameterJdbcTemplate(source);
     }
 
     @Bean

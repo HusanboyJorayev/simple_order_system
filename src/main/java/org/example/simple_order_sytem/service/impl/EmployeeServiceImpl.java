@@ -12,9 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +25,7 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeMapper employeeMapper;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
     public Response<EmployeeDto> create(EmployeeDto dto) {
@@ -120,6 +124,76 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .message("Ok")
                 .status(HttpStatus.OK)
                 .data(dtoList)
+                .build();
+    }
+
+    @Override
+    public Response<List<EmployeeDto>> getFilterByQuery(Integer id,
+                                                        Integer officeId,
+                                                        Integer reportTo,
+                                                        String lastname,
+                                                        String firstname,
+                                                        String extension,
+                                                        String email,
+                                                        String jobTitle) {
+
+        String sql = "select id        as id,\n" +
+                "       office_id as officeId,\n" +
+                "       report_to as reportTo,\n" +
+                "       lastname  as lastname,\n" +
+                "       firstname as firstname,\n" +
+                "       extension as extension,\n" +
+                "       email     as email,\n" +
+                "       job_title as jobTitle\n" +
+                "from employee where id>0 ";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        if (id != null) {
+            sql += " and id=:id";
+            params.addValue("id", id);
+        }
+        if (officeId != null) {
+            sql += " and office_id=:officeId";
+            params.addValue("officeId", officeId);
+        }
+        if (reportTo != null) {
+            sql += " and report_to=:reportTo";
+            params.addValue("reportTo", reportTo);
+        }
+        if (lastname != null) {
+            sql += " and lower(lastname) like :lastname";
+            params.addValue("lastname", "%" + lastname.toLowerCase() + "%");
+        }
+        if (firstname != null) {
+            sql += " and lower(firstname) like :firstname";
+            params.addValue("firstname", "%" + firstname.toLowerCase() + "%");
+        }
+        if (extension != null) {
+            sql += " and lower(extension) like :extension";
+            params.addValue("extension", "%" + extension.toLowerCase() + "%");
+        }
+        if (email != null) {
+            sql += " and lower(email) like :email";
+            params.addValue("email", "%" + email.toLowerCase() + "%");
+        }
+        if (jobTitle != null) {
+            sql += " and lower(job_title) like :jobTitle";
+            params.addValue("jobTitle", "%" + jobTitle.toLowerCase() + "%");
+        }
+
+        List<EmployeeDto> list = jdbcTemplate.query(sql, params, (rs, rowNumber) -> new EmployeeDto(
+                rs.getInt("id"),
+                rs.getInt("officeId"),
+                rs.getInt("reportTo"),
+                rs.getString("lastname"),
+                rs.getString("firstname"),
+                rs.getString("extension"),
+                rs.getString("email"),
+                rs.getString("jobTitle")
+        ));
+        return Response.<List<EmployeeDto>>builder()
+                .message("Ok")
+                .code(200)
+                .data(list)
                 .build();
     }
 }

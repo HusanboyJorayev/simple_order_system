@@ -25,4 +25,15 @@ public class EmployeeDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    public EmployeeDto(int id, int officeId, int reportTo, String lastname, String firstname, String extension, String email, String jobTitle) {
+        this.id = id;
+        this.officeId = officeId;
+        this.reportTo = reportTo;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.extension = extension;
+        this.email = email;
+        this.jobTitle = jobTitle;
+    }
 }

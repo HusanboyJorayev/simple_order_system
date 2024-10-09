@@ -34,4 +34,24 @@ public class CustomerDto implements Serializable {
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
 
+    public CustomerDto(Integer id, Integer employeeId, String firstName,
+                       String lastName, String email, String phone,
+                       String address1, String address2,
+                       String city, String state,
+                       String zipCode, String country,
+                       Double creditLimit) {
+        this.id = id;
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.creditLimit = creditLimit;
+    }
 }
